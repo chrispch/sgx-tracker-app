@@ -1,3 +1,20 @@
-page-list {
+.List {
+    color: color($colors, secondary);
+    font-size: 20px;
+}
 
+.ListItem {
+    color: color($colors, dark)
+}
+
+.High {
+    color: color($colors, high)
+}
+
+.Low {
+    color: color($colors, low)
+}
+
+.LTP {
+    color: color($colors, secondary)
 }

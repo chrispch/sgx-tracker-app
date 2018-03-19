@@ -3,21 +3,41 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Data</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label>Contract</ion-label>
+    <ion-select [(ngModel)]="contract" (ionChange)="submitForm($event)">
+      <ion-option *ngFor="let c of contractList">{{c}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Contract Month</ion-label>
+    <ion-select [(ngModel)]="contractYear" (ionChange)="submitForm($event)" interface="action-sheet" >
+      <ion-option *ngFor="let y of years">{{y}}</ion-option>
+    </ion-select>
+    <ion-select [(ngModel)]="contractMonth" (ionChange)="submitForm($event)" interface="action-sheet">
+      <ion-option *ngFor="let m of months">{{m}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Trade Session</ion-label>
+    <ion-select [(ngModel)]="tradeSession" (ionChange)="submitForm($event)" interface="action-sheet">
+      <ion-option value="0">T</ion-option>
+      <ion-option value="1">T+1</ion-option>
+    </ion-select>
+  </ion-item>
+  <p *ngIf="noItems" text-center>There seem to be no results here.</p>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
+    <ion-item-divider *ngFor="let data of dailyPrices" (click)="toggleList(data)" class="List">{{data.date_tracked}}
+      <div *ngIf="data.show_list" class="ListItem" padding-top>
+        <h3>Last Trade Price: <span class="LTP">${{data.last_trade_price}}</span></h3>
+        <h3>High: <span class="High">${{data.high}}</span></h3>
+        <h3>Low: <span class="Low">${{data.low}}</span></h3>
       </div>
-    </button>
+    </ion-item-divider>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>
